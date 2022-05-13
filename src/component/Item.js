@@ -7,17 +7,31 @@ function Item(props) {
         setInputValue(value)
     }
     function Cong () {
-        setInputValue(inputValue+1)
+          setInputValue(inputValue+1) 
     }
     function Tru () {
-        setInputValue(inputValue-1)
+      if(inputValue===1){
+        return 
+      }
+      setInputValue(inputValue-1)
     }
+    const data = {
+      id: props.id,
+      name: props.name,
+      price: props.price,
+      soLuong: inputValue
+    }
+    const disable = props.cart.find(item=>item.id===props.id)
+   
   return (
     <div className='item-container'>
       <img src={props.img}></img>
       <div className='item-name'><b>{props.name}</b></div>
       <div className='item-price'>{props.price}</div>
-      <button className='buttonCongTru' onClick={Tru}>-</button><input className='item-input' onChange={getValue} value={inputValue}/><button className='buttonCongTru' onClick={Cong}>+</button><button className='buttonThem' onClick={props.buyProducts}>Thêm vào giỏ</button>
+      <button className='buttonCongTru' onClick={Tru}>-</button>
+      <input className='item-input' onChange={getValue}  value={inputValue} />
+      <button className='buttonCongTru' onClick={Cong}>+</button>
+      <button disabled={disable?true:false} className='buttonThem' onClick={()=>props.buyProducts(data)}>Thêm vào giỏ</button>
     </div>
   )
 }
