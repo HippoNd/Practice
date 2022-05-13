@@ -1,23 +1,24 @@
-import logo from './logo.svg';
 import './App.css';
-
+import Header from './component/Header';
+import Body from './component/Body';
+import axios from 'axios';
+import React,{useState,useEffect} from 'react';
 function App() {
+  const [products,setProducts]=useState([])
+  const [count,setCount]=useState(0)
+  function callAPI(){
+    axios.get('http://localhost:5001/products').then(function(res){
+      setProducts(res.data)
+    })
+  }
+  function buyProducts () {
+    setCount(count+1)
+  }
+  useEffect(callAPI,[])
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Header count={count}/>
+      <Body products={products} buyProducts={buyProducts}/>
     </div>
   );
 }
